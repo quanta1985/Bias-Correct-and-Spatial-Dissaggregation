@@ -24,9 +24,32 @@ for ivar in $var;do
   done
 done
 
-lytrain=($(seq 1980 4 ${ytrainend}))                            #leap year train period
-lyfu=($(seq 2016 4 ${ytestend}))                               #leap year future periody
-nytrain=(1981 1982 1983 1985 1986 1987 1989 1990 1991 1993 1994 1995 1997 1998 1999 2001 2002 2003 2005 2006 2007 2009 2010 2011 2013 2014)  #normal year of train period
+lytrain=()
+nytrain=()
+for i in $(seq ${ytrainbgn} ${ytrainend});do
+  a=`expr $i % 4`
+  b=`expr $i % 100`
+  c=`expr $i % 400`
+  if [ $a -eq 0 -a $b -ne 0 -o $c -eq 0 ];then
+    echo $i
+    lytrain=($(echo ${lytrain[*]}) $(echo ${i[*]})) 
+  else nytrain=($(echo ${nytrain[*]}) $(echo ${i[*]})) 
+  fi  
+done
+echo "Leap years in the training dataset:" ${lytrain[*]}
+echo "Normal years in the training dataset:" ${nytrain[*]}
+
+lyfu=()
+for i in $(seq ${ytestbgn} ${ytestend});do
+  a=`expr $i % 4`
+  b=`expr $i % 100`
+  c=`expr $i % 400`
+  if [ $a -eq 0 -a $b -ne 0 -o $c -eq 0 ];then
+    echo $i
+    lyfu=($(echo ${lyfu[*]}) $(echo ${i[*]})) 
+  fi  
+done
+echo "Leap years in the future dataset:" ${lyfu[*]}
 
 for iyear in $(seq ${ytestbgn} ${ytestend}); do #for each year in future period
   for mon in $(seq 1 12); do # for each month
