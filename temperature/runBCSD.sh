@@ -124,6 +124,10 @@ done
 
 #rm tmp.obs* tmp.his* tmp.fu* tas.*
 
+
+# Make mask file out of observation file
+cdo -O -timmean -sub obs.nc obs.nc zero.nc
+
 echo "Add trend back to bc anomaly - Calculate trend bias - Caculate change factor"
 for e in $(seq 1 3);do # loop tas tasmax tasmin
   cdo -O -add fu${e}.trend.nc bc.tas.${e}.nc bc.fu.${e}.nc                               # bc.fu with trend added back # bc.fu = bc.anomaly.fu + trend.fu
@@ -144,7 +148,7 @@ for e in $(seq 1 3);do # loop tas tasmax tasmin
   cdo -O -mergetime tmp.cf.${e}.year_208* tmp.cf.${e}.year.merge.28.nc
   cdo -O -mergetime tmp.cf.${e}.year_209* tmp.cf.${e}.year.merge.29.nc
   cdo -O -mergetime tmp.cf.${e}.year.merge* tmp.cf.${e}.nc 
-  cdo -O -remapdis,grid_0.1.dat tmp.cf.${e}.nc tmp.cf.r01.${e}.nc                 #interpolate to 0.1
+  cdo -O -remapdis,zero.nc tmp.cf.${e}.nc tmp.cf.r01.${e}.nc                 #interpolate to 0.1
 done
 
 # Mask outside VN and return name tas tasmax tasmin 
@@ -184,6 +188,6 @@ sed -e 's/iybgn/'${begintest}'/g' \
     final.sh > tmp.final.sh
 
 sh tmp.final.sh
-#rm tmp.cf* tmp.vngp* tmp.bc.* tmp.tas*
+rm tmp.cf* tmp.vngp* tmp.bc.* tmp.tas*
 
 echo "PROGRAM FINISHED!!!"
