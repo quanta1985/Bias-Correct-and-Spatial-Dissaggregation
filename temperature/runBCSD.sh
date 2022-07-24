@@ -11,7 +11,6 @@ begintrain=1980
 endtrain=2014
 begintest=2015
 endtest=2099
-dir=HIS   #Directory of current process
 
 ### DAILY obs data (1961-2018): Link RAW data
 ln -s /work/users/quanta/QUAN/DATA/VnGC/T2m.dd.1961.2018.nc obs.tas.nc
