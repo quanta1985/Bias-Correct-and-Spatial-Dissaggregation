@@ -1,7 +1,7 @@
 echo "########################################### SETUP ########################################"
 echo "# 1. TRAIN 35 ys (1980-2014) - TEST 85yrs (2015-2099)                                    #"
 echo "# 2. Get monthly mean of VnGP                                                            #" 
-echo "# 3. Regrid GCM and VnGP to same resolution                                              #" 
+echo "# 3. Regrid GCM and VnGP to same resolution, change all variable name to pr              #" 
 echo "# 4. obsvervation (obs), historical (his), future simulation (fu)                        #" 
 echo "##########################################################################################"
 model=ACCESS-CM2
@@ -74,13 +74,11 @@ cdo -O -mergetime tmp.cf.208* tmp.cf.merge.28.nc
 cdo -O -mergetime tmp.cf.209* tmp.cf.merge.29.nc
 cdo -O -mergetime tmp.cf.merge* tmp.cf.nc
 
+# make a mask file out of the observation file
+cdo -O -timmean -sub obs.nc obs.nc zero.nc
 
 # cf at 0.1 deg
-#cdo -O -setmisstoc,0 tmp.cf.nc tmp1.cf.nc
-#cdo -O -remapbil,grid_0.1.dat tmp1.cf.nc tmp2.cf.nc
-#cdo -O -sub tmp2.cf.nc zero.nc cf.pr.nc
-
-cdo -O remapdis,grid_0.1.dat tmp.cf.nc tmp2.cf.nc
+cdo -O remapdis,zero.nc tmp.cf.nc tmp2.cf.nc
 cdo -O -sub tmp2.cf.nc zero.nc cf.pr.nc
 rm tmp*
 
