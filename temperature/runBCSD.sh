@@ -172,15 +172,6 @@ sed -e 's/iytrainbgn/'${begintrain}'/g' \
 
 sh tmp.SD.sh # Main script SD
 
-echo "Begin fix max min"
-wd=$(pwd)
-for year in $(seq ${begintest} ${endtest});do
-  for mon in $(seq 1 12);do
-    if [ ${mon} -lt 10 ]; then amon=`expr 0${mon}`; else amon=${mon}; fi
-    Rscript fixmaxmin.revise.R tmp.bcsd.tas.${year}.${amon}.nc tmp.bcsd.tasmax.${year}.${amon}.nc tmp.bcsd.tasmin.${year}.${amon}.nc ${year} ${amon} ${wd}
-  done
-done
-
 #echo "Begin to finalize files!"
 sed -e 's/iybgn/'${begintest}'/g' \
     -e 's/iyend/'${endtest}'/g' \
