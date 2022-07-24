@@ -19,5 +19,5 @@ done
 
 mkdir out
 mv *${yearbgn}-${yearend}_daily.nc out
-#rm tmp* pr.* his* fu* obs* bc.* cf.*
+tmp* pr.* his* fu* obs* bc.* cf.*
 echo "BCSD finished !!!"
