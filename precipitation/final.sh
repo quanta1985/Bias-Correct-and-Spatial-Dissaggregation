@@ -14,7 +14,7 @@ for ivar in $var;do #for each variable
   cdo -O -mergetime tmp.bcsd.${ivar}.207* tmp.merge.27.nc
   cdo -O -mergetime tmp.bcsd.${ivar}.208* tmp.merge.28.nc
   cdo -O -mergetime tmp.bcsd.${ivar}.209* tmp.merge.29.nc
-  cdo -O -mergetime tmp.merge* bcsd_${ivar}_${model}_ssp585_${yearbgn}-${yearend}_daily.nc # Revised version with trend bias removal
+  cdo -O -mergetime tmp.merge* bcsd_${ivar}_${model}_ssp585_${yearbgn}-${yearend}_daily.nc
 done 
 
 mkdir out
